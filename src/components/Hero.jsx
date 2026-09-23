@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -5,12 +6,30 @@ import packageSkardu from "../assets/package-skardu.jpg";
 import packageHunza from "../assets/package-hunza.jpg";
 import packageNeelam from "../assets/package-neelam.jpg";
 import packageFamilyLake from "../assets/package-family-lake.jpg";
+import heroVideo from "../assets/media/video.mp4";
 
 const slides = [
-  packageSkardu,
-  packageHunza,
-  packageNeelam,
-  packageFamilyLake,
+  {
+    type: "video",
+    src: heroVideo,
+  },
+  {
+    type: "image",
+    src: packageSkardu,
+  },
+  {
+    type: "image",
+    src: packageHunza,
+  },
+  
+  {
+    type: "image",
+    src: packageNeelam,
+  },
+  {
+    type: "image",
+    src: packageFamilyLake,
+  },
 ];
 
 export default function Hero({
@@ -24,34 +43,65 @@ export default function Hero({
   const [activeSlide, setActiveSlide] = useState(0);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveSlide((current) => (current + 1) % slides.length);
-    }, 5000);
+    const currentSlide = slides[activeSlide];
 
-    return () => clearInterval(timer);
-  }, []);
+    // Give the video more time to play.
+    // Images change every 5 seconds.
+    const duration = currentSlide.type === "video" ? 12000 : 5000;
+
+    const timer = setTimeout(() => {
+      setActiveSlide((current) => (current + 1) % slides.length);
+    }, duration);
+
+    return () => clearTimeout(timer);
+  }, [activeSlide]);
 
   return (
     <section
       id={isHome ? "home" : undefined}
       className={`relative flex items-center overflow-hidden ${
-        isHome ? "min-h-[850px]" : "min-h-[420px] sm:min-h-[480px]"
+        isHome
+          ? "min-h-[850px]"
+          : "min-h-[420px] sm:min-h-[480px]"
       }`}
     >
+      {/* Background Slides */}
       <div className="absolute inset-0">
-        {slides.map((image, index) => (
-          <div
-            key={image}
-            className={`hero-slide absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out ${
-              index === activeSlide ? "opacity-100" : "opacity-0"
-            }`}
-            style={{
-              backgroundImage: `url(${image})`,
-            }}
-          />
-        ))}
+        {slides.map((slide, index) => {
+          const isActive = index === activeSlide;
+
+          return (
+            <div
+              key={`${slide.type}-${index}`}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                isActive ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              {slide.type === "video" ? (
+                <video
+                  className="h-full w-full object-cover"
+                  src={slide.src}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  aria-hidden="true"
+                />
+              ) : (
+                <div
+                  className="h-full w-full bg-cover bg-center"
+                  style={{
+                    backgroundImage: `url(${slide.src})`,
+                  }}
+                />
+              )}
+            </div>
+          );
+        })}
       </div>
 
+      {/* Dark Overlay */}
       <div
         className={`absolute inset-0 ${
           isHome
@@ -60,6 +110,7 @@ export default function Hero({
         }`}
       />
 
+      {/* Content */}
       <div
         className={`relative z-10 mx-auto w-full max-w-7xl px-5 pt-28 pb-16 sm:pt-32 ${
           isHome ? "" : "text-center"
@@ -67,30 +118,35 @@ export default function Hero({
       >
         {isHome ? (
           <div className="max-w-3xl">
+            {/* Certification Badge */}
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-950/50 px-3 py-2 text-[10px] font-extrabold uppercase tracking-wider text-white backdrop-blur sm:px-4 sm:text-xs">
               <span className="text-gold">✓</span>
               PTDC Certified Tour Guide · Licence ID 1010
             </div>
 
+            {/* Location Badge */}
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-950/50 px-3 py-2 text-[10px] font-extrabold uppercase tracking-wider text-white backdrop-blur sm:px-4 sm:text-xs">
               <span className="text-gold">✓</span>
               Northern Pakistan · Hosted Journeys
             </div>
 
-          
-
+            {/* Heading */}
             <h1 className="font-display text-6xl font-bold leading-[.98] tracking-[-.03em] text-white sm:text-7xl lg:text-[88px]">
-              Welcome to 
+              Welcome to
               <br />
-              <em className="text-gold">Ehtisham Travel & Tours</em>
+              <em className="text-gold">
+                Ehtisham Travel & Tours
+              </em>
             </h1>
 
+            {/* Description */}
             <p className="mt-7 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">
               Professional honeymoon, family, student, corporate and winter
               journeys through the mountains, lakes and valleys of Northern
               Pakistan.
             </p>
 
+            {/* Buttons */}
             <div className="mt-9 flex flex-wrap gap-4">
               <Link
                 to="/packages"
@@ -108,16 +164,20 @@ export default function Hero({
               </button>
             </div>
 
+            {/* Features */}
             <div className="mt-9 flex flex-wrap gap-x-8 gap-y-2 text-xs font-semibold text-slate-400">
               <span>
                 <strong className="text-emerald-400">✓</strong> Transport
               </span>
+
               <span>
                 <strong className="text-emerald-400">✓</strong> Hotels
               </span>
+
               <span>
                 <strong className="text-emerald-400">✓</strong> Meals
               </span>
+
               <span>
                 <strong className="text-emerald-400">✓</strong> Local Guide
               </span>
@@ -159,17 +219,21 @@ export default function Hero({
         )}
       </div>
 
+      {/* Scroll Indicator */}
       {isHome && (
         <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-[10px] uppercase tracking-[.25em] text-slate-400">
           Scroll to explore
-          <span className="ml-2 inline-block animate-bounce text-gold">↓</span>
+          <span className="ml-2 inline-block animate-bounce text-gold">
+            ↓
+          </span>
         </div>
       )}
 
+      {/* Slide Controls */}
       <div className="absolute bottom-8 right-6 z-10 hidden gap-2 sm:flex">
-        {slides.map((_, index) => (
+        {slides.map((slide, index) => (
           <button
-            key={index}
+            key={`${slide.type}-${index}`}
             type="button"
             onClick={() => setActiveSlide(index)}
             aria-label={`Show slide ${index + 1}`}
