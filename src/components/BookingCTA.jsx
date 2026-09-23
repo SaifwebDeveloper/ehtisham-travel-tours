@@ -1,7 +1,10 @@
+
 export default function BookingCTA({ onBook }) {
   return (
-    <section className="relative overflow-hidden border-t border-white/10 bg-emerald-950/60 py-28">
-      <div className="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl" />
+    <section className="relative overflow-hidden border-t border-white/10 bg-slate-950 py-28">
+      {/* Decorative glow */}
+      <div className="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-amber-400/10 blur-3xl" />
+      <div className="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-emerald-500/5 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-5 text-center">
         <p className="section-kicker">Start Your Journey</p>
@@ -22,7 +25,7 @@ export default function BookingCTA({ onBook }) {
           <button
             type="button"
             onClick={() => onBook()}
-            className="rounded-xl bg-emerald-600 px-8 py-4 text-base font-bold text-white transition hover:bg-emerald-500"
+            className="rounded-xl bg-amber-500 px-8 py-4 text-base font-bold text-slate-950 shadow-lg shadow-amber-500/20 transition duration-300 hover:bg-amber-400 hover:shadow-amber-400/30"
           >
             📋 Open Booking Enquiry Form
           </button>

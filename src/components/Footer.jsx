@@ -152,10 +152,14 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-white/10">
-        <div class="mx-auto flex max-w-7xl flex-col items-center justify-center gap-2 px-5 py-5 text-[11px] text-slate-500 sm:flex-row">
-  <span>© 2026 Ehtisham Travel &amp; Tours. All rights reserved.</span>
-  <span>Designed &amp; developed by Saif 💖</span>
-</div>
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-center gap-1.5 px-5 py-5 text-center text-[11px] text-slate-500 sm:flex-row sm:flex-wrap sm:gap-2">
+          <span>© 2026 Ehtisham Travel &amp; Tours. All rights reserved.</span>
+          <span className="hidden sm:inline">•</span>
+          <span>Designed &amp; developed by Saif 💖</span>
+          <p className="w-full text-[10px] leading-relaxed text-slate-600">
+            Destination photography: Fassifarooq, Mobeen Saeed, Zuhaira Farooq, Zeeshan Ali Qadri, Zaeem Siddiq and Farhan Rehman via Wikimedia Commons (CC BY-SA).
+          </p>
+        </div>
       </div>
     </footer>
   );
