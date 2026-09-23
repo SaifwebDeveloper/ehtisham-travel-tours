@@ -126,17 +126,14 @@ const bookingSteps = [
   },
 ];
 
-// Helper component for Infinite Scroll on Mobile + Infinite Marquee on Desktop
 function InfiniteCardRow({ items, onBook, rowPrefix }) {
   const containerRef = useRef(null);
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
 
-  // Triple items list to allow seamless infinite wrapping during manual touch/drag
   const tripledItems = [...items, ...items, ...items];
 
-  // Infinite Scroll Boundary Check
   const handleScroll = () => {
     const el = containerRef.current;
     if (!el) return;
@@ -149,7 +146,6 @@ function InfiniteCardRow({ items, onBook, rowPrefix }) {
     }
   };
 
-  // Touch / Mouse Dragging Handlers for Mobile & Desktop
   const handleMouseDown = (e) => {
     setIsMouseDown(true);
     setStartX((e.pageX || e.touches[0].pageX) - containerRef.current.offsetLeft);
@@ -164,7 +160,7 @@ function InfiniteCardRow({ items, onBook, rowPrefix }) {
     if (!isMouseDown) return;
     e.preventDefault();
     const x = (e.pageX || e.touches[0].pageX) - containerRef.current.offsetLeft;
-    const walk = (x - startX) * 1.5; // Drag speed multiplier
+    const walk = (x - startX) * 1.5;
     containerRef.current.scrollLeft = scrollLeft - walk;
   };
 
@@ -179,15 +175,16 @@ function InfiniteCardRow({ items, onBook, rowPrefix }) {
       onTouchStart={handleMouseDown}
       onTouchEnd={handleMouseLeaveOrUp}
       onTouchMove={handleMouseMove}
-      className="no-scrollbar overflow-x-auto py-2 cursor-grab active:cursor-grabbing snap-x snap-mandatory lg:snap-none"
+      className="no-scrollbar overflow-x-auto py-1 cursor-grab active:cursor-grabbing snap-x snap-mandatory lg:snap-none"
     >
-      <div className="animate-marquee-rtl flex gap-4 px-4 sm:gap-6 sm:px-6">
+      <div className="animate-marquee-rtl flex gap-4 px-4 sm:gap-5 sm:px-6">
         {tripledItems.map((item, index) => (
           <article
             key={`${rowPrefix}-${item.title}-${index}`}
-            className="group w-[80vw] max-w-[320px] shrink-0 snap-center overflow-hidden rounded-3xl border border-white/10 bg-white/[0.035] transition duration-500 hover:-translate-y-2 hover:border-gold/30 hover:bg-white/[0.05] sm:w-[360px]"
+            className="group w-[calc(100vw-2rem)] sm:w-[330px] shrink-0 snap-center overflow-hidden rounded-2xl border border-white/10 bg-white/[0.035] transition duration-300 hover:border-gold/30 hover:bg-white/[0.05]"
           >
-            <div className="relative h-56 overflow-hidden">
+            {/* Height increased specifically for mobile: h-56 on mobile, h-48 on sm and up */}
+            <div className="relative h-56 sm:h-48 overflow-hidden">
               <img
                 src={item.image}
                 alt={`${item.title} travel package`}
@@ -196,33 +193,34 @@ function InfiniteCardRow({ items, onBook, rowPrefix }) {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent" />
 
-              <span className="absolute left-4 top-4 rounded-full border border-white/10 bg-black/50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-gold backdrop-blur">
+              <span className="absolute left-3 top-3 rounded-full border border-white/10 bg-black/50 px-2.5 py-1 text-[9px] font-bold uppercase tracking-wider text-gold backdrop-blur">
                 {item.category}
               </span>
 
-              <span className="absolute bottom-4 left-4 rounded-full bg-black/50 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur">
+              <span className="absolute bottom-3 left-3 rounded-full bg-black/50 px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur">
                 {item.duration}
               </span>
 
-              <span className="absolute bottom-4 right-4 rounded-full bg-gold px-3 py-1.5 text-xs font-bold text-night">
+              <span className="absolute bottom-3 right-3 rounded-full bg-gold px-2.5 py-1 text-[11px] font-bold text-night">
                 {item.price}
               </span>
             </div>
 
-            <div className="p-5">
-              <p className="text-[11px] font-bold uppercase tracking-wider text-gold">
+            {/* Increased padding and room for description text on mobile */}
+            <div className="p-5 sm:p-5">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-gold">
                 {item.location}
               </p>
-              <h2 className="mt-1 font-display text-xl font-bold">
+              <h2 className="mt-0.5 font-display text-lg font-bold">
                 {item.title}
               </h2>
-              <p className="mt-2 min-h-[48px] text-xs leading-6 text-white/55">
+              <p className="mt-1 line-clamp-3 sm:line-clamp-2 text-xs leading-5 text-white/55">
                 {item.description}
               </p>
               <button
                 type="button"
                 onClick={() => onBook(item.title)}
-                className="mt-5 w-full rounded-xl bg-gold px-4 py-3 text-xs font-bold text-night transition duration-300 hover:bg-gold-light"
+                className="mt-4 sm:mt-3.5 w-full rounded-xl bg-gold px-3.5 py-3 sm:py-2.5 text-xs font-bold text-night transition duration-300 hover:bg-gold-light"
               >
                 Book This Journey
               </button>
@@ -242,8 +240,7 @@ export default function PackagesPage({ onBook }) {
   ];
 
   return (
-    <div className="bg-night pt-24 text-white overflow-x-hidden">
-      {/* Styles for animation keyframes and scrollbars */}
+    <div className="bg-night pt-16 sm:pt-20 text-white overflow-x-hidden min-h-screen">
       <style>{`
         @keyframes marquee-right-to-left {
           0% {
@@ -265,7 +262,6 @@ export default function PackagesPage({ onBook }) {
           }
         }
 
-        /* Hide scrollbars for clean UI */
         .no-scrollbar::-webkit-scrollbar {
           display: none;
         }
@@ -275,72 +271,74 @@ export default function PackagesPage({ onBook }) {
         }
       `}</style>
 
-      {/* Hero */}
-      <section className="relative overflow-hidden px-4 py-24 sm:px-6 lg:px-8">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(214,173,96,0.12),transparent_45%)]" />
+      {/* Hero Section */}
+      <section className="relative overflow-hidden px-4 pt-10 pb-6 sm:px-6 sm:pt-12 lg:px-8">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(214,173,96,0.15),transparent_50%)]" />
 
-        <div className="relative mx-auto max-w-5xl text-center">
-          <p className="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-gold">
+        <div className="relative mx-auto max-w-4xl text-center">
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-gold">
             Find Your Way North
           </p>
 
-          <h1 className="font-display text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-            Real destinations,
-            <br />
-            <em className="text-gold">made for your journey.</em>
+          <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-bold leading-tight">
+            Real destinations,{" "}
+            <em className="text-gold not-italic">made for your journey.</em>
           </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-white/55 sm:text-lg">
-            Real destinations, flexible schedules and a local team managing
+          <p className="mx-auto mt-3 max-w-2xl text-xs sm:text-base leading-relaxed text-white/60">
+            Real destinations, flexible schedules, and a local team managing
             every important detail.
           </p>
         </div>
       </section>
 
-      {/* Infinite Two-Row Package Slider */}
-      <section className="relative py-12 space-y-6">
-        {/* Soft Edge Overlays */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-night to-transparent sm:w-28" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-night to-transparent sm:w-28" />
+      {/* Package Slider Section */}
+      <section className="relative py-2 space-y-4 sm:space-y-5">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-night to-transparent sm:w-24" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-night to-transparent sm:w-24" />
 
-        {/* ROW 1 */}
-        <InfiniteCardRow items={row1Packages} onBook={onBook} rowPrefix="r1" />
+        {/* First Row */}
+        <div>
+          <InfiniteCardRow items={row1Packages} onBook={onBook} rowPrefix="r1" />
+        </div>
 
-        {/* ROW 2 */}
-        <InfiniteCardRow items={row2Packages} onBook={onBook} rowPrefix="r2" />
+        {/* Second Row */}
+        <div>
+          <InfiniteCardRow items={row2Packages} onBook={onBook} rowPrefix="r2" />
+        </div>
       </section>
 
       {/* Essentials */}
-      <section className="border-t border-white/10 bg-white/[0.02] px-4 py-24 sm:px-6 lg:px-8">
+      <section className="border-t border-white/10 bg-white/[0.02] px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold">
               Every Journey
             </p>
 
-            <h2 className="mt-4 font-display text-3xl font-bold sm:text-4xl">
+            <h2 className="mt-2 font-display text-2xl sm:text-3xl font-bold">
               The essentials are handled.
             </h2>
 
-            <p className="mt-5 text-sm leading-7 text-white/55 sm:text-base">
+            <p className="mt-3 text-xs sm:text-sm text-white/55">
               Your final inclusions are confirmed clearly before booking, with
               no hidden surprises.
             </p>
           </div>
 
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {essentials.map((item) => (
               <div
                 key={item.title}
-                className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition duration-300 hover:-translate-y-1 hover:border-gold/30"
+                className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition duration-300 hover:border-gold/30"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-gold/20 bg-gold/10 text-xl">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-gold/20 bg-gold/10 text-lg">
                   {item.icon}
                 </div>
 
-                <h3 className="mt-5 font-bold">{item.title}</h3>
+                <h3 className="mt-4 text-sm font-bold">{item.title}</h3>
 
-                <p className="mt-3 text-sm leading-7 text-white/50">
+                <p className="mt-2 text-xs leading-5 text-white/50">
                   {item.description}
                 </p>
               </div>
@@ -350,35 +348,32 @@ export default function PackagesPage({ onBook }) {
       </section>
 
       {/* Private and Group Tours */}
-      <section className="px-4 py-24 sm:px-6 lg:px-8">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2">
+      <section className="px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-2">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold">
               Private & Group Tours
             </p>
 
-            <h2 className="mt-4 font-display text-3xl font-bold sm:text-4xl">
-              One route,
-              <br />
-              <em className="text-gold">made entirely yours.</em>
+            <h2 className="mt-2 font-display text-2xl sm:text-3xl font-bold">
+              One route, <em className="text-gold not-italic">made entirely yours.</em>
             </h2>
 
-            <p className="mt-6 max-w-xl text-sm leading-8 text-white/55 sm:text-base">
+            <p className="mt-4 text-xs sm:text-sm leading-6 text-white/55">
               Travelling with family, university friends, colleagues or as a
               couple? We adapt the pace, accommodation and experiences to your
               priorities.
             </p>
 
-            <div className="mt-8 space-y-4">
+            <div className="mt-6 space-y-3">
               {travelStyles.map((item) => (
                 <div
                   key={item}
-                  className="flex items-center gap-3 text-sm text-white/70"
+                  className="flex items-center gap-3 text-xs sm:text-sm text-white/70"
                 >
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-400">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-500/10 text-xs text-emerald-400">
                     ✓
                   </span>
-
                   {item}
                 </div>
               ))}
@@ -389,18 +384,15 @@ export default function PackagesPage({ onBook }) {
             <img
               src={packageFamilyLake}
               alt="Private family tour beside a mountain lake"
-              className="h-[420px] w-full object-cover transition duration-700 group-hover:scale-105"
+              className="h-[340px] w-full object-cover transition duration-700 group-hover:scale-105"
               loading="lazy"
             />
-
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-
-            <div className="absolute bottom-6 left-6">
+            <div className="absolute bottom-5 left-5">
               <p className="text-xs font-bold uppercase tracking-widest text-gold">
                 Private Family Tour
               </p>
-
-              <p className="mt-2 text-xl font-bold">
+              <p className="mt-1 text-lg font-bold">
                 Beautiful places. Comfortable journeys.
               </p>
             </div>
@@ -408,41 +400,40 @@ export default function PackagesPage({ onBook }) {
         </div>
       </section>
 
-      {/* Booking Journey */}
-      <section className="border-t border-white/10 bg-white/[0.02] px-4 py-24 sm:px-6 lg:px-8">
+      {/* Booking Steps */}
+      <section className="border-t border-white/10 bg-white/[0.02] px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold">
               Booking Journey
             </p>
 
-            <h2 className="mt-4 font-display text-3xl font-bold sm:text-4xl">
+            <h2 className="mt-2 font-display text-2xl sm:text-3xl font-bold">
               From idea to departure.
             </h2>
 
-            <p className="mt-5 text-sm leading-7 text-white/55">
+            <p className="mt-2 text-xs sm:text-sm text-white/55">
               A simple process designed to make your travel planning clear and
               comfortable.
             </p>
           </div>
 
-          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {bookingSteps.map((step) => (
               <div
                 key={step.number}
-                className="rounded-2xl border border-white/10 bg-night p-6 transition duration-300 hover:-translate-y-1 hover:border-gold/30"
+                className="rounded-2xl border border-white/10 bg-night p-5 transition duration-300 hover:border-gold/30"
               >
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-black tracking-widest text-gold">
                     {step.number}
                   </span>
-
-                  <span className="text-xl">{step.icon}</span>
+                  <span className="text-lg">{step.icon}</span>
                 </div>
 
-                <h3 className="mt-7 font-bold">{step.title}</h3>
+                <h3 className="mt-5 text-sm font-bold">{step.title}</h3>
 
-                <p className="mt-3 text-sm leading-7 text-white/50">
+                <p className="mt-2 text-xs leading-5 text-white/50">
                   {step.description}
                 </p>
               </div>
@@ -452,37 +443,36 @@ export default function PackagesPage({ onBook }) {
       </section>
 
       {/* Custom Trip CTA */}
-      <section className="border-t border-white/10 px-4 py-24 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl text-center">
+      <section className="border-t border-white/10 px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl text-center">
           <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold">
             Custom Travel
           </p>
 
-          <h2 className="mt-4 font-display text-3xl font-bold sm:text-4xl">
+          <h2 className="mt-2 font-display text-2xl sm:text-3xl font-bold">
             Looking for something different?
           </h2>
 
-          <p className="mx-auto mt-4 max-w-2xl leading-7 text-white/55">
+          <p className="mx-auto mt-3 max-w-xl text-xs sm:text-sm leading-6 text-white/55">
             Tell us where you want to go, how many people are traveling and
-            what kind of experience you want. We can help plan a custom
-            journey.
+            what kind of experience you want.
           </p>
 
           <button
             type="button"
             onClick={() => onBook()}
-            className="mt-8 rounded-full bg-gold px-7 py-3.5 font-bold text-night transition hover:bg-gold-light"
+            className="mt-6 rounded-full bg-gold px-6 py-3 text-xs font-bold text-night transition hover:bg-gold-light"
           >
             Plan a Custom Trip
           </button>
         </div>
       </section>
 
-      {/* Contact */}
-      <div className="pb-20 text-center">
+      {/* Contact Link */}
+      <div className="pb-12 text-center">
         <Link
           to="/contact"
-          className="text-sm font-semibold text-gold transition hover:text-gold-light"
+          className="text-xs font-semibold text-gold transition hover:text-gold-light"
         >
           Need help choosing a package? Contact us →
         </Link>
