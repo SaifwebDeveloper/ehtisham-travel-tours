@@ -51,9 +51,7 @@ export default function Gallery() {
           ))}
         </div>
       </div>
-      <p className="w-full text-[10px] leading-relaxed text-slate-600">
-            Destination photography: Fassifarooq, Mobeen Saeed, Zuhaira Farooq, Zeeshan Ali Qadri, Zaeem Siddiq and Farhan Rehman via Wikimedia Commons (CC BY-SA).
-          </p>
+      
     </section>
   );
 }
