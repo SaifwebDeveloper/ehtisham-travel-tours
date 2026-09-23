@@ -523,3 +523,21 @@ body {
     transform: translateY(0) scale(1);
   }
 }
+
+.gallery-track {
+  animation: gallery-scroll 35s linear infinite;
+}
+
+@keyframes gallery-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.gallery-marquee:hover .gallery-track {
+  animation-play-state: paused;
+}

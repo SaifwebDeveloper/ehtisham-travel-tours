@@ -156,9 +156,7 @@ export default function Footer() {
           <span>© 2026 Ehtisham Travel &amp; Tours. All rights reserved.</span>
           <span className="hidden sm:inline">•</span>
           <span>Designed &amp; developed by Saif 💖</span>
-          <p className="w-full text-[10px] leading-relaxed text-slate-600">
-            Destination photography: Fassifarooq, Mobeen Saeed, Zuhaira Farooq, Zeeshan Ali Qadri, Zaeem Siddiq and Farhan Rehman via Wikimedia Commons (CC BY-SA).
-          </p>
+          
         </div>
       </div>
     </footer>
