@@ -72,10 +72,12 @@ export default function Hero({
               PTDC Certified Tour Guide · Licence ID 1010
             </div>
 
-            <p className="mb-5 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[.32em] text-emerald-400">
-              <span className="h-1.5 w-1.5 rounded-full bg-gold" />
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-950/50 px-3 py-2 text-[10px] font-extrabold uppercase tracking-wider text-white backdrop-blur sm:px-4 sm:text-xs">
+              <span className="text-gold">✓</span>
               Northern Pakistan · Hosted Journeys
-            </p>
+            </div>
+
+          
 
             <h1 className="font-display text-6xl font-bold leading-[.98] tracking-[-.03em] text-white sm:text-7xl lg:text-[88px]">
               Welcome to 
