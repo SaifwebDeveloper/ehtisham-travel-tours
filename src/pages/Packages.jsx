@@ -1,3 +1,4 @@
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 import packageSkardu from "../assets/package-skardu.jpg";
@@ -125,26 +126,131 @@ const bookingSteps = [
   },
 ];
 
+// Helper component for Infinite Scroll on Mobile + Infinite Marquee on Desktop
+function InfiniteCardRow({ items, onBook, rowPrefix }) {
+  const containerRef = useRef(null);
+  const [isMouseDown, setIsMouseDown] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+
+  // Triple items list to allow seamless infinite wrapping during manual touch/drag
+  const tripledItems = [...items, ...items, ...items];
+
+  // Infinite Scroll Boundary Check
+  const handleScroll = () => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const maxScroll = el.scrollWidth / 3;
+    if (el.scrollLeft <= 0) {
+      el.scrollLeft = maxScroll;
+    } else if (el.scrollLeft >= maxScroll * 2) {
+      el.scrollLeft = maxScroll;
+    }
+  };
+
+  // Touch / Mouse Dragging Handlers for Mobile & Desktop
+  const handleMouseDown = (e) => {
+    setIsMouseDown(true);
+    setStartX((e.pageX || e.touches[0].pageX) - containerRef.current.offsetLeft);
+    setScrollLeft(containerRef.current.scrollLeft);
+  };
+
+  const handleMouseLeaveOrUp = () => {
+    setIsMouseDown(false);
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isMouseDown) return;
+    e.preventDefault();
+    const x = (e.pageX || e.touches[0].pageX) - containerRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5; // Drag speed multiplier
+    containerRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  return (
+    <div
+      ref={containerRef}
+      onScroll={handleScroll}
+      onMouseDown={handleMouseDown}
+      onMouseLeave={handleMouseLeaveOrUp}
+      onMouseUp={handleMouseLeaveOrUp}
+      onMouseMove={handleMouseMove}
+      onTouchStart={handleMouseDown}
+      onTouchEnd={handleMouseLeaveOrUp}
+      onTouchMove={handleMouseMove}
+      className="no-scrollbar overflow-x-auto py-2 cursor-grab active:cursor-grabbing snap-x snap-mandatory lg:snap-none"
+    >
+      <div className="animate-marquee-rtl flex gap-4 px-4 sm:gap-6 sm:px-6">
+        {tripledItems.map((item, index) => (
+          <article
+            key={`${rowPrefix}-${item.title}-${index}`}
+            className="group w-[80vw] max-w-[320px] shrink-0 snap-center overflow-hidden rounded-3xl border border-white/10 bg-white/[0.035] transition duration-500 hover:-translate-y-2 hover:border-gold/30 hover:bg-white/[0.05] sm:w-[360px]"
+          >
+            <div className="relative h-56 overflow-hidden">
+              <img
+                src={item.image}
+                alt={`${item.title} travel package`}
+                className="h-full w-full object-cover transition duration-700 group-hover:scale-110"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent" />
+
+              <span className="absolute left-4 top-4 rounded-full border border-white/10 bg-black/50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-gold backdrop-blur">
+                {item.category}
+              </span>
+
+              <span className="absolute bottom-4 left-4 rounded-full bg-black/50 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur">
+                {item.duration}
+              </span>
+
+              <span className="absolute bottom-4 right-4 rounded-full bg-gold px-3 py-1.5 text-xs font-bold text-night">
+                {item.price}
+              </span>
+            </div>
+
+            <div className="p-5">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-gold">
+                {item.location}
+              </p>
+              <h2 className="mt-1 font-display text-xl font-bold">
+                {item.title}
+              </h2>
+              <p className="mt-2 min-h-[48px] text-xs leading-6 text-white/55">
+                {item.description}
+              </p>
+              <button
+                type="button"
+                onClick={() => onBook(item.title)}
+                className="mt-5 w-full rounded-xl bg-gold px-4 py-3 text-xs font-bold text-night transition duration-300 hover:bg-gold-light"
+              >
+                Book This Journey
+              </button>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function PackagesPage({ onBook }) {
-  // Split or duplicate cards to create two full continuous rows for desktop
-  const row1Packages = [...packages, ...packages];
+  const row1Packages = packages;
   const row2Packages = [
-    ...packages.slice(3),
-    ...packages.slice(0, 3),
     ...packages.slice(3),
     ...packages.slice(0, 3),
   ];
 
   return (
     <div className="bg-night pt-24 text-white overflow-x-hidden">
-      {/* Styles for keyframes & hidden scrollbar on mobile */}
+      {/* Styles for animation keyframes and scrollbars */}
       <style>{`
         @keyframes marquee-right-to-left {
           0% {
             transform: translateX(0%);
           }
           100% {
-            transform: translateX(-50%);
+            transform: translateX(-33.33%);
           }
         }
 
@@ -159,14 +265,13 @@ export default function PackagesPage({ onBook }) {
           }
         }
 
-        /* Hide scrollbar for Chrome, Safari and Opera */
+        /* Hide scrollbars for clean UI */
         .no-scrollbar::-webkit-scrollbar {
           display: none;
         }
-        /* Hide scrollbar for IE, Edge and Firefox */
         .no-scrollbar {
-          -ms-overflow-style: none;  /* IE and Edge */
-          scrollbar-width: none;  /* Firefox */
+          -ms-overflow-style: none;
+          scrollbar-width: none;
         }
       `}</style>
 
@@ -192,117 +297,17 @@ export default function PackagesPage({ onBook }) {
         </div>
       </section>
 
-      {/* Two-Row Packages: Touch Swipeable / One-by-One Snap on Mobile, Auto-Marquee on Desktop */}
+      {/* Infinite Two-Row Package Slider */}
       <section className="relative py-12 space-y-6">
         {/* Soft Edge Overlays */}
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-night to-transparent sm:w-28" />
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-night to-transparent sm:w-28" />
 
         {/* ROW 1 */}
-        <div className="overflow-x-auto no-scrollbar snap-x snap-mandatory py-2">
-          <div className="animate-marquee-rtl flex gap-4 px-4 sm:gap-6 sm:px-6">
-            {row1Packages.map((item, index) => (
-              <article
-                key={`r1-${item.title}-${index}`}
-                className="group w-[85vw] max-w-[320px] shrink-0 snap-center overflow-hidden rounded-3xl border border-white/10 bg-white/[0.035] transition duration-500 hover:-translate-y-2 hover:border-gold/30 hover:bg-white/[0.05] sm:w-[360px] lg:snap-align-none"
-              >
-                <div className="relative h-56 overflow-hidden">
-                  <img
-                    src={item.image}
-                    alt={`${item.title} travel package`}
-                    className="h-full w-full object-cover transition duration-700 group-hover:scale-110"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent" />
-
-                  <span className="absolute left-4 top-4 rounded-full border border-white/10 bg-black/50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-gold backdrop-blur">
-                    {item.category}
-                  </span>
-
-                  <span className="absolute bottom-4 left-4 rounded-full bg-black/50 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur">
-                    {item.duration}
-                  </span>
-
-                  <span className="absolute bottom-4 right-4 rounded-full bg-gold px-3 py-1.5 text-xs font-bold text-night">
-                    {item.price}
-                  </span>
-                </div>
-
-                <div className="p-5">
-                  <p className="text-[11px] font-bold uppercase tracking-wider text-gold">
-                    {item.location}
-                  </p>
-                  <h2 className="mt-1 font-display text-xl font-bold">
-                    {item.title}
-                  </h2>
-                  <p className="mt-2 min-h-[48px] text-xs leading-6 text-white/55">
-                    {item.description}
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => onBook(item.title)}
-                    className="mt-5 w-full rounded-xl bg-gold px-4 py-3 text-xs font-bold text-night transition duration-300 hover:bg-gold-light"
-                  >
-                    Book This Journey
-                  </button>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
+        <InfiniteCardRow items={row1Packages} onBook={onBook} rowPrefix="r1" />
 
         {/* ROW 2 */}
-        <div className="overflow-x-auto no-scrollbar snap-x snap-mandatory py-2">
-          <div className="animate-marquee-rtl flex gap-4 px-4 sm:gap-6 sm:px-6">
-            {row2Packages.map((item, index) => (
-              <article
-                key={`r2-${item.title}-${index}`}
-                className="group w-[85vw] max-w-[320px] shrink-0 snap-center overflow-hidden rounded-3xl border border-white/10 bg-white/[0.035] transition duration-500 hover:-translate-y-2 hover:border-gold/30 hover:bg-white/[0.05] sm:w-[360px] lg:snap-align-none"
-              >
-                <div className="relative h-56 overflow-hidden">
-                  <img
-                    src={item.image}
-                    alt={`${item.title} travel package`}
-                    className="h-full w-full object-cover transition duration-700 group-hover:scale-110"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent" />
-
-                  <span className="absolute left-4 top-4 rounded-full border border-white/10 bg-black/50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-gold backdrop-blur">
-                    {item.category}
-                  </span>
-
-                  <span className="absolute bottom-4 left-4 rounded-full bg-black/50 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur">
-                    {item.duration}
-                  </span>
-
-                  <span className="absolute bottom-4 right-4 rounded-full bg-gold px-3 py-1.5 text-xs font-bold text-night">
-                    {item.price}
-                  </span>
-                </div>
-
-                <div className="p-5">
-                  <p className="text-[11px] font-bold uppercase tracking-wider text-gold">
-                    {item.location}
-                  </p>
-                  <h2 className="mt-1 font-display text-xl font-bold">
-                    {item.title}
-                  </h2>
-                  <p className="mt-2 min-h-[48px] text-xs leading-6 text-white/55">
-                    {item.description}
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => onBook(item.title)}
-                    className="mt-5 w-full rounded-xl bg-gold px-4 py-3 text-xs font-bold text-night transition duration-300 hover:bg-gold-light"
-                  >
-                    Book This Journey
-                  </button>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
+        <InfiniteCardRow items={row2Packages} onBook={onBook} rowPrefix="r2" />
       </section>
 
       {/* Essentials */}
