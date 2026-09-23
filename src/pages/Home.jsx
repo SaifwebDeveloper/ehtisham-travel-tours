@@ -1,4 +1,4 @@
-
+import InternationalPreview from "../components/InternationalPreview";
 import Hero from "../components/Hero";
 import Intro from "../components/Intro";
 import Stories from "../components/Stories";
@@ -21,6 +21,8 @@ export default function Home({ onBook }) {
       <Stories />
 
       <Packages onBook={onBook} />
+
+      <InternationalPreview onBook={onBook} />
 
       <Destinations />
 

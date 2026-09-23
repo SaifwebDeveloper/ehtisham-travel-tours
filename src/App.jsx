@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 
@@ -7,6 +6,7 @@ import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home";
 import PackagesPage from "./pages/Packages";
 import DestinationsPage from "./pages/Destinations";
+import International from "./pages/International";
 import ServicesPage from "./pages/Services";
 import GalleryPage from "./pages/Gallery";
 import AboutPage from "./pages/About";
@@ -38,36 +38,49 @@ export default function App() {
           />
         }
       >
+        {/* Home */}
         <Route
           path="/"
           element={<Home onBook={openBooking} />}
         />
 
+        {/* Packages */}
         <Route
           path="/packages"
           element={<PackagesPage onBook={openBooking} />}
         />
 
+        {/* International */}
+        <Route
+          path="/international"
+          element={<International onBook={openBooking} />}
+        />
+
+        {/* Destinations */}
         <Route
           path="/destinations"
           element={<DestinationsPage onBook={openBooking} />}
         />
 
+        {/* Services */}
         <Route
           path="/services"
           element={<ServicesPage onBook={openBooking} />}
         />
 
+        {/* Gallery */}
         <Route
           path="/gallery"
           element={<GalleryPage />}
         />
 
+        {/* About */}
         <Route
           path="/about"
           element={<AboutPage />}
         />
 
+        {/* Contact */}
         <Route
           path="/contact"
           element={<ContactPage onBook={openBooking} />}

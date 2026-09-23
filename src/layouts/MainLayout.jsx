@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
@@ -21,20 +20,25 @@ export default function MainLayout({
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-night text-white">
+      {/* Navigation */}
       <Navbar onBook={() => onBook()} />
 
+      {/* Page Content */}
       <main>
         <Outlet />
       </main>
 
+      {/* Floating WhatsApp Button */}
       <WhatsAppButton />
 
+      {/* Booking Modal */}
       <BookingModal
         open={bookingOpen}
         selectedDestination={selectedDestination}
         onClose={onCloseBooking}
       />
 
+      {/* Footer */}
       <Footer />
     </div>
   );

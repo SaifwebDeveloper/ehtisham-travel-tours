@@ -1,5 +1,7 @@
+
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+
 import logo from "../assets/ehtisham-logo.jpg";
 
 export default function Navbar({ onBook }) {
@@ -8,6 +10,7 @@ export default function Navbar({ onBook }) {
 
   const navItems = [
     ["Packages", "/packages"],
+    ["International", "/international"],
     ["Destinations", "/destinations"],
     ["Services", "/services"],
     ["Gallery", "/gallery"],
@@ -26,7 +29,7 @@ export default function Navbar({ onBook }) {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-slate-950/70 backdrop-blur-md transition-all duration-300">
       <nav className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-3 py-3 sm:gap-3 sm:px-6 lg:px-8">
-        
+
         {/* LOGO */}
         <Link
           to="/"
@@ -75,10 +78,12 @@ export default function Navbar({ onBook }) {
           ))}
         </div>
 
-        {/* ACTIONS & MOBILE CONTROLS */}
+        {/* ACTIONS */}
         <div className="flex items-center gap-2">
+
           {/* DESKTOP SOCIAL LINKS */}
           <div className="hidden items-center gap-2 lg:flex">
+
             {/* Instagram */}
             <a
               href="https://www.instagram.com/travel_with_ehtisham_"
@@ -95,8 +100,20 @@ export default function Navbar({ onBook }) {
                 strokeWidth="1.8"
                 className="h-[19px] w-[19px]"
               >
-                <rect x="3" y="3" width="18" height="18" rx="5" />
-                <circle cx="12" cy="12" r="4" />
+                <rect
+                  x="3"
+                  y="3"
+                  width="18"
+                  height="18"
+                  rx="5"
+                />
+
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="4"
+                />
+
                 <circle
                   cx="17.5"
                   cy="6.5"
@@ -126,12 +143,17 @@ export default function Navbar({ onBook }) {
                 className="h-[20px] w-[20px]"
               >
                 <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" />
-                <circle cx="12" cy="10" r="2.5" />
+
+                <circle
+                  cx="12"
+                  cy="10"
+                  r="2.5"
+                />
               </svg>
             </a>
           </div>
 
-          {/* ALWAYS VISIBLE BOOK NOW BUTTON */}
+          {/* BOOK NOW */}
           <button
             type="button"
             onClick={onBook}
@@ -140,10 +162,14 @@ export default function Navbar({ onBook }) {
             Book Now
           </button>
 
-          {/* MOBILE MENU TOGGLE BUTTON */}
+          {/* MOBILE MENU BUTTON */}
           <button
             type="button"
-            aria-label={menuOpen ? "Close navigation" : "Open navigation"}
+            aria-label={
+              menuOpen
+                ? "Close navigation"
+                : "Open navigation"
+            }
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((value) => !value)}
             className="grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-white/20 text-white transition duration-300 hover:bg-white/10 sm:h-10 sm:w-10 lg:hidden"
@@ -183,6 +209,7 @@ export default function Navbar({ onBook }) {
       {menuOpen && (
         <div className="mx-4 mb-4 overflow-hidden rounded-2xl border border-white/10 bg-slate-950/95 p-5 shadow-2xl backdrop-blur-xl lg:hidden">
           <div className="flex flex-col gap-1">
+
             {navItems.map(([label, path]) => (
               <Link
                 key={path}
@@ -206,11 +233,14 @@ export default function Navbar({ onBook }) {
 
             {/* MOBILE SOCIAL LINKS */}
             <div className="mt-3 flex items-center gap-3 border-t border-white/10 pt-4">
+
+              {/* Instagram */}
               <a
                 href="https://www.instagram.com/travel_with_ehtisham_"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
+                title="Instagram"
                 className="grid h-11 w-11 place-items-center rounded-full border border-white/15 text-white transition hover:border-gold/60 hover:bg-white/10 hover:text-gold"
               >
                 <svg
@@ -220,8 +250,20 @@ export default function Navbar({ onBook }) {
                   strokeWidth="1.8"
                   className="h-5 w-5"
                 >
-                  <rect x="3" y="3" width="18" height="18" rx="5" />
-                  <circle cx="12" cy="12" r="4" />
+                  <rect
+                    x="3"
+                    y="3"
+                    width="18"
+                    height="18"
+                    rx="5"
+                  />
+
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="4"
+                  />
+
                   <circle
                     cx="17.5"
                     cy="6.5"
@@ -232,11 +274,13 @@ export default function Navbar({ onBook }) {
                 </svg>
               </a>
 
+              {/* Google Maps */}
               <a
                 href="https://maps.app.goo.gl/d1QDQKVXQnn2CBwf7"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Google Maps"
+                title="Google Maps"
                 className="grid h-11 w-11 place-items-center rounded-full border border-white/15 text-white transition hover:border-gold/60 hover:bg-white/10 hover:text-gold"
               >
                 <svg
@@ -249,7 +293,12 @@ export default function Navbar({ onBook }) {
                   className="h-5 w-5"
                 >
                   <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" />
-                  <circle cx="12" cy="10" r="2.5" />
+
+                  <circle
+                    cx="12"
+                    cy="10"
+                    r="2.5"
+                  />
                 </svg>
               </a>
 
