@@ -126,34 +126,20 @@ const bookingSteps = [
 ];
 
 export default function PackagesPage({ onBook }) {
-  // Split or duplicate cards to create two full continuous rows
-  const row1Packages = [...packages, ...packages];
-  const row2Packages = [
-    ...packages.slice(3),
-    ...packages.slice(0, 3),
-    ...packages.slice(3),
-    ...packages.slice(0, 3),
-  ];
+  // Two distinct arrays for top and bottom rows
+  const row1Packages = packages.slice(0, 3);
+  const row2Packages = packages.slice(3, 6);
 
   return (
     <div className="bg-night pt-24 text-white overflow-x-hidden">
-      {/* Dynamic Keyframe Style for Smooth Right-to-Left Marquee */}
+      {/* Scrollbar hiding styles */}
       <style>{`
-        @keyframes marquee-right-to-left {
-          0% {
-            transform: translateX(0%);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
         }
-        .animate-marquee-rtl {
-          display: flex;
-          width: max-content;
-          animation: marquee-right-to-left 40s linear infinite;
-        }
-        .animate-marquee-rtl:hover {
-          animation-play-state: paused;
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
         }
       `}</style>
 
@@ -179,19 +165,19 @@ export default function PackagesPage({ onBook }) {
         </div>
       </section>
 
-      {/* Two-Row Moving Packages Marquee (Right-to-Left) */}
-      <section className="relative py-12 space-y-6">
-        {/* Soft Edge Overlays */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-28 bg-gradient-to-r from-night to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-28 bg-gradient-to-l from-night to-transparent" />
+      {/* Centered Two-Row Smooth Scroll Slider */}
+      <section className="relative py-12 space-y-8">
+        {/* Soft edge gradient indicators */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-night to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-night to-transparent" />
 
         {/* ROW 1 */}
-        <div className="overflow-hidden py-2">
-          <div className="animate-marquee-rtl gap-6 px-3">
-            {row1Packages.map((item, index) => (
+        <div className="relative">
+          <div className="no-scrollbar flex snap-x snap-mandatory justify-center gap-6 overflow-x-auto px-6 py-2 scroll-smooth">
+            {row1Packages.map((item) => (
               <article
-                key={`r1-${item.title}-${index}`}
-                className="group w-[320px] shrink-0 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.035] transition duration-500 hover:-translate-y-2 hover:border-gold/30 hover:bg-white/[0.05] sm:w-[360px]"
+                key={item.title}
+                className="group w-[300px] shrink-0 snap-start overflow-hidden rounded-3xl border border-white/10 bg-white/[0.035] transition duration-500 hover:-translate-y-2 hover:border-gold/30 hover:bg-white/[0.05] sm:w-[350px]"
               >
                 <div className="relative h-56 overflow-hidden">
                   <img
@@ -239,12 +225,12 @@ export default function PackagesPage({ onBook }) {
         </div>
 
         {/* ROW 2 */}
-        <div className="overflow-hidden py-2">
-          <div className="animate-marquee-rtl gap-6 px-3">
-            {row2Packages.map((item, index) => (
+        <div className="relative">
+          <div className="no-scrollbar flex snap-x snap-mandatory justify-center gap-6 overflow-x-auto px-6 py-2 scroll-smooth">
+            {row2Packages.map((item) => (
               <article
-                key={`r2-${item.title}-${index}`}
-                className="group w-[320px] shrink-0 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.035] transition duration-500 hover:-translate-y-2 hover:border-gold/30 hover:bg-white/[0.05] sm:w-[360px]"
+                key={item.title}
+                className="group w-[300px] shrink-0 snap-start overflow-hidden rounded-3xl border border-white/10 bg-white/[0.035] transition duration-500 hover:-translate-y-2 hover:border-gold/30 hover:bg-white/[0.05] sm:w-[350px]"
               >
                 <div className="relative h-56 overflow-hidden">
                   <img
