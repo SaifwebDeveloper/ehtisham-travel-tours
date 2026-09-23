@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -21,7 +20,6 @@ const slides = [
     type: "image",
     src: packageHunza,
   },
-  
   {
     type: "image",
     src: packageNeelam,
@@ -45,8 +43,6 @@ export default function Hero({
   useEffect(() => {
     const currentSlide = slides[activeSlide];
 
-    // Give the video more time to play.
-    // Images change every 5 seconds.
     const duration = currentSlide.type === "video" ? 12000 : 5000;
 
     const timer = setTimeout(() => {
@@ -60,9 +56,7 @@ export default function Hero({
     <section
       id={isHome ? "home" : undefined}
       className={`relative flex items-center overflow-hidden ${
-        isHome
-          ? "min-h-[850px]"
-          : "min-h-[420px] sm:min-h-[480px]"
+        isHome ? "min-h-screen h-screen" : "min-h-[50vh]"
       }`}
     >
       {/* Background Slides */}
@@ -110,61 +104,62 @@ export default function Hero({
         }`}
       />
 
-      {/* Content */}
+      {/* Content Container */}
       <div
-        className={`relative z-10 mx-auto w-full max-w-7xl px-5 pt-28 pb-16 sm:pt-32 ${
+        className={`relative z-10 mx-auto w-full max-w-7xl px-6 pt-20 pb-16 sm:pt-24 ${
           isHome ? "" : "text-center"
         }`}
       >
         {isHome ? (
           <div className="max-w-3xl">
             {/* Certification Badge */}
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-950/50 px-3 py-2 text-[10px] font-extrabold uppercase tracking-wider text-white backdrop-blur sm:px-4 sm:text-xs">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-950/50 px-4 py-2 text-xs font-extrabold uppercase tracking-wider text-white backdrop-blur">
               <span className="text-gold">✓</span>
               PTDC Certified Tour Guide · Licence ID 1010
             </div>
 
             {/* Location Badge */}
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-950/50 px-3 py-2 text-[10px] font-extrabold uppercase tracking-wider text-white backdrop-blur sm:px-4 sm:text-xs">
+            <div className="mb-5 sm:ml-2 inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-950/50 px-4 py-2 text-xs font-extrabold uppercase tracking-wider text-white backdrop-blur">
               <span className="text-gold">✓</span>
               Northern Pakistan · Hosted Journeys
             </div>
 
             {/* Heading */}
-            <h2 className="font-display text-6xl font-bold leading-[.98] tracking-[-.03em] text-white sm:text-7xl lg:text-[88px]">
+            <h2 className="font-display text-4xl font-bold leading-tight tracking-tight text-white sm:text-6xl lg:text-7xl">
               Welcome to
               <br />
-              <em className="text-gold">
+              <em className="text-gold not-italic">
                 Ehtisham Travel & Tours
               </em>
             </h2>
 
             {/* Description */}
-            <p className="mt-7 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-300 sm:text-xl">
               Professional honeymoon, family, student, corporate and winter
               journeys through the mountains, lakes and valleys of Northern
               Pakistan.
             </p>
 
             {/* Buttons (Centered) */}
-<div className="mt-9 flex flex-wrap justify-center items-center gap-4 w-full">
-  <Link
-    to="/packages"
-    className="inline-flex items-center justify-center rounded-lg bg-emerald-600 px-7 py-4 text-sm font-bold text-white transition hover:bg-emerald-500"
-  >
-    Explore Packages ↗
-  </Link>
+            <div className="mt-10 flex flex-wrap justify-center items-center gap-4 w-full">
+              <Link
+                to="/packages"
+                className="inline-flex items-center justify-center rounded-lg bg-emerald-600 px-8 py-4 text-base font-bold text-white transition hover:bg-emerald-500"
+              >
+                Explore Packages ↗
+              </Link>
 
-  <button
-    type="button"
-    onClick={onBook}
-    className="inline-flex items-center justify-center rounded-lg border border-gold/50 bg-amber-500/10 px-7 py-4 text-sm font-bold text-gold backdrop-blur transition hover:bg-gold hover:text-night"
-  >
-    Book Your Adventure
-  </button>
-</div>
+              <button
+                type="button"
+                onClick={onBook}
+                className="inline-flex items-center justify-center rounded-lg border border-gold/50 bg-amber-500/10 px-8 py-4 text-base font-bold text-gold backdrop-blur transition hover:bg-gold hover:text-night"
+              >
+                Book Your Adventure
+              </button>
+            </div>
+
             {/* Features */}
-            <div className="mt-9 flex flex-wrap gap-x-8 gap-y-2 text-xs font-semibold text-slate-400">
+            <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sm font-semibold text-slate-400">
               <span>
                 <strong className="text-emerald-400">✓</strong> Transport
               </span>
@@ -200,7 +195,7 @@ export default function Hero({
             </h1>
 
             {description && (
-              <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-white/60 sm:text-lg">
+              <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/60">
                 {description}
               </p>
             )}
@@ -209,7 +204,7 @@ export default function Hero({
               <button
                 type="button"
                 onClick={() => onBook()}
-                className="mt-8 inline-flex rounded-full bg-gold px-7 py-3.5 text-sm font-bold text-night transition hover:bg-gold-light"
+                className="mt-8 inline-flex rounded-full bg-gold px-8 py-4 text-sm font-bold text-night transition hover:bg-gold-light"
               >
                 Book Your Adventure
               </button>
@@ -218,7 +213,7 @@ export default function Hero({
         )}
       </div>
 
-      {/* Scroll Indicator */}
+      {/* Scroll Down Indicator */}
       {isHome && (
         <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-[10px] uppercase tracking-[.25em] text-slate-400">
           Scroll to explore
