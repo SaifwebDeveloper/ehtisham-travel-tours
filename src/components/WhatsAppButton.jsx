@@ -1,6 +1,30 @@
+import { useEffect, useState } from "react";
 import { WHATSAPP_URL_WITH_MESSAGE } from "../data/contactInfo";
 
 export default function WhatsAppButton() {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Hide button when near the top (in Hero section)
+      // Show button after scrolling down past 500px (adjust height if needed)
+      if (window.scrollY > 500) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    // Attach scroll listener
+    window.addEventListener("scroll", handleScroll);
+
+    // Initial check on load
+    handleScroll();
+
+    // Clean up event listener on unmount
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <a
       href={WHATSAPP_URL_WITH_MESSAGE}
@@ -8,7 +32,11 @@ export default function WhatsAppButton() {
       rel="noopener noreferrer"
       aria-label="Chat with Ehtisham Travel & Tours on WhatsApp"
       title="Chat on WhatsApp"
-      className="group fixed bottom-4 right-4 z-40 flex items-center gap-2.5 rounded-full bg-emerald-600 px-4 py-3 text-xs font-bold text-white shadow-xl shadow-emerald-950/30 ring-4 ring-emerald-500/20 transition-all duration-300 hover:scale-105 hover:bg-emerald-500 hover:shadow-emerald-500/30 sm:bottom-6 sm:right-6 sm:px-5 sm:py-3.5 sm:text-sm"
+      className={`group fixed bottom-4 right-4 z-40 flex items-center gap-2.5 rounded-full bg-emerald-600 px-4 py-3 text-xs font-bold text-white shadow-xl shadow-emerald-950/30 ring-4 ring-emerald-500/20 transition-all duration-500 hover:scale-105 hover:bg-emerald-500 hover:shadow-emerald-500/30 sm:bottom-6 sm:right-6 sm:px-5 sm:py-3.5 sm:text-sm ${
+        isVisible
+          ? "opacity-100 translate-y-0 pointer-events-auto"
+          : "opacity-0 translate-y-10 pointer-events-none"
+      }`}
     >
       {/* Online Indicator */}
       <span className="relative flex h-3 w-3">

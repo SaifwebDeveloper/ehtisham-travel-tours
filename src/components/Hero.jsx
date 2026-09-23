@@ -131,13 +131,13 @@ export default function Hero({
             </div>
 
             {/* Heading */}
-            <h1 className="font-display text-6xl font-bold leading-[.98] tracking-[-.03em] text-white sm:text-7xl lg:text-[88px]">
+            <h2 className="font-display text-6xl font-bold leading-[.98] tracking-[-.03em] text-white sm:text-7xl lg:text-[88px]">
               Welcome to
               <br />
               <em className="text-gold">
                 Ehtisham Travel & Tours
               </em>
-            </h1>
+            </h2>
 
             {/* Description */}
             <p className="mt-7 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">
@@ -146,24 +146,23 @@ export default function Hero({
               Pakistan.
             </p>
 
-            {/* Buttons */}
-            <div className="mt-9 flex flex-wrap gap-4">
-              <Link
-                to="/packages"
-                className="inline-flex items-center rounded-lg bg-emerald-600 px-7 py-4 text-sm font-bold text-white transition hover:bg-emerald-500"
-              >
-                Explore Packages ↗
-              </Link>
+            {/* Buttons (Centered) */}
+<div className="mt-9 flex flex-wrap justify-center items-center gap-4 w-full">
+  <Link
+    to="/packages"
+    className="inline-flex items-center justify-center rounded-lg bg-emerald-600 px-7 py-4 text-sm font-bold text-white transition hover:bg-emerald-500"
+  >
+    Explore Packages ↗
+  </Link>
 
-              <button
-                type="button"
-                onClick={onBook}
-                className="inline-flex items-center rounded-lg border border-gold/50 bg-amber-500/10 px-7 py-4 text-sm font-bold text-gold backdrop-blur transition hover:bg-gold hover:text-night"
-              >
-                Book Your Adventure
-              </button>
-            </div>
-
+  <button
+    type="button"
+    onClick={onBook}
+    className="inline-flex items-center justify-center rounded-lg border border-gold/50 bg-amber-500/10 px-7 py-4 text-sm font-bold text-gold backdrop-blur transition hover:bg-gold hover:text-night"
+  >
+    Book Your Adventure
+  </button>
+</div>
             {/* Features */}
             <div className="mt-9 flex flex-wrap gap-x-8 gap-y-2 text-xs font-semibold text-slate-400">
               <span>
