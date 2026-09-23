@@ -78,9 +78,9 @@ export default function Hero({
             </p>
 
             <h1 className="font-display text-6xl font-bold leading-[.98] tracking-[-.03em] text-white sm:text-7xl lg:text-[88px]">
-              We Plan Your
+              Welcome to 
               <br />
-              <em className="text-gold">Adventures.</em>
+              <em className="text-gold">Ehtisham Travel & Tours</em>
             </h1>
 
             <p className="mt-7 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">
