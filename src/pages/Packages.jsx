@@ -126,20 +126,47 @@ const bookingSteps = [
 ];
 
 export default function PackagesPage({ onBook }) {
-  // Two distinct arrays for top and bottom rows
-  const row1Packages = packages.slice(0, 3);
-  const row2Packages = packages.slice(3, 6);
+  // Split or duplicate cards to create two full continuous rows for desktop
+  const row1Packages = [...packages, ...packages];
+  const row2Packages = [
+    ...packages.slice(3),
+    ...packages.slice(0, 3),
+    ...packages.slice(3),
+    ...packages.slice(0, 3),
+  ];
 
   return (
     <div className="bg-night pt-24 text-white overflow-x-hidden">
-      {/* Scrollbar hiding styles */}
+      {/* Styles for keyframes & hidden scrollbar on mobile */}
       <style>{`
+        @keyframes marquee-right-to-left {
+          0% {
+            transform: translateX(0%);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+
+        @media (min-width: 1024px) {
+          .animate-marquee-rtl {
+            display: flex;
+            width: max-content;
+            animation: marquee-right-to-left 40s linear infinite;
+          }
+          .animate-marquee-rtl:hover {
+            animation-play-state: paused;
+          }
+        }
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
         .no-scrollbar::-webkit-scrollbar {
           display: none;
         }
+        /* Hide scrollbar for IE, Edge and Firefox */
         .no-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;  /* Firefox */
         }
       `}</style>
 
@@ -165,19 +192,19 @@ export default function PackagesPage({ onBook }) {
         </div>
       </section>
 
-      {/* Centered Two-Row Smooth Scroll Slider */}
-      <section className="relative py-12 space-y-8">
-        {/* Soft edge gradient indicators */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-night to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-night to-transparent" />
+      {/* Two-Row Packages: Touch Swipeable / One-by-One Snap on Mobile, Auto-Marquee on Desktop */}
+      <section className="relative py-12 space-y-6">
+        {/* Soft Edge Overlays */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-night to-transparent sm:w-28" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-night to-transparent sm:w-28" />
 
         {/* ROW 1 */}
-        <div className="relative">
-          <div className="no-scrollbar flex snap-x snap-mandatory justify-center gap-6 overflow-x-auto px-6 py-2 scroll-smooth">
-            {row1Packages.map((item) => (
+        <div className="overflow-x-auto no-scrollbar snap-x snap-mandatory py-2">
+          <div className="animate-marquee-rtl flex gap-4 px-4 sm:gap-6 sm:px-6">
+            {row1Packages.map((item, index) => (
               <article
-                key={item.title}
-                className="group w-[300px] shrink-0 snap-start overflow-hidden rounded-3xl border border-white/10 bg-white/[0.035] transition duration-500 hover:-translate-y-2 hover:border-gold/30 hover:bg-white/[0.05] sm:w-[350px]"
+                key={`r1-${item.title}-${index}`}
+                className="group w-[85vw] max-w-[320px] shrink-0 snap-center overflow-hidden rounded-3xl border border-white/10 bg-white/[0.035] transition duration-500 hover:-translate-y-2 hover:border-gold/30 hover:bg-white/[0.05] sm:w-[360px] lg:snap-align-none"
               >
                 <div className="relative h-56 overflow-hidden">
                   <img
@@ -225,12 +252,12 @@ export default function PackagesPage({ onBook }) {
         </div>
 
         {/* ROW 2 */}
-        <div className="relative">
-          <div className="no-scrollbar flex snap-x snap-mandatory justify-center gap-6 overflow-x-auto px-6 py-2 scroll-smooth">
-            {row2Packages.map((item) => (
+        <div className="overflow-x-auto no-scrollbar snap-x snap-mandatory py-2">
+          <div className="animate-marquee-rtl flex gap-4 px-4 sm:gap-6 sm:px-6">
+            {row2Packages.map((item, index) => (
               <article
-                key={item.title}
-                className="group w-[300px] shrink-0 snap-start overflow-hidden rounded-3xl border border-white/10 bg-white/[0.035] transition duration-500 hover:-translate-y-2 hover:border-gold/30 hover:bg-white/[0.05] sm:w-[350px]"
+                key={`r2-${item.title}-${index}`}
+                className="group w-[85vw] max-w-[320px] shrink-0 snap-center overflow-hidden rounded-3xl border border-white/10 bg-white/[0.035] transition duration-500 hover:-translate-y-2 hover:border-gold/30 hover:bg-white/[0.05] sm:w-[360px] lg:snap-align-none"
               >
                 <div className="relative h-56 overflow-hidden">
                   <img
