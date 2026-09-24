@@ -1,8 +1,10 @@
 
 import { packages } from "../data/travelData";
 
+const DISCOUNT = 0.25;
 const USD_RATE = 280;
 
+// Extract numeric PKR value from price
 const getPKRValue = (price) => {
   if (typeof price !== "string") return null;
 
@@ -13,12 +15,27 @@ const getPKRValue = (price) => {
   return Number(match[0].replace(/,/g, ""));
 };
 
+// Calculate original price before 25% discount
+const getOriginalPrice = (finalPrice) => {
+  const pkr = getPKRValue(finalPrice);
+
+  if (!pkr) return null;
+
+  return Math.round(pkr / (1 - DISCOUNT));
+};
+
+// Convert final PKR price to approximate USD
 const getUSDPrice = (price) => {
   const pkr = getPKRValue(price);
 
   if (!pkr) return null;
 
   return Math.round(pkr / USD_RATE);
+};
+
+// Format PKR
+const formatPKR = (price) => {
+  return `Rs ${price.toLocaleString("en-PK")}`;
 };
 
 export default function Packages({ onBook }) {
@@ -32,9 +49,7 @@ export default function Packages({ onBook }) {
         {/* Header */}
         <div className="mb-14 grid gap-8 md:grid-cols-2 md:items-end">
           <div>
-            <p className="section-kicker">
-              Tour Packages
-            </p>
+            <p className="section-kicker">Tour Packages</p>
 
             <h2 className="section-title">
               Journeys ready
@@ -49,7 +64,7 @@ export default function Packages({ onBook }) {
               and fuel. Choose a route or ask us to build a custom plan.
             </p>
 
-            {/* 25% Offer */}
+            {/* Offer Badge */}
             <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/10 px-4 py-2">
               <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gold text-[10px] font-black text-night">
                 %
@@ -62,9 +77,11 @@ export default function Packages({ onBook }) {
           </div>
         </div>
 
-        {/* Package Cards */}
+        {/* Packages */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {packages.map((pkg) => {
+            const finalPKR = getPKRValue(pkg.price);
+            const originalPKR = getOriginalPrice(pkg.price);
             const usdPrice = getUSDPrice(pkg.price);
 
             return (
@@ -82,16 +99,11 @@ export default function Packages({ onBook }) {
               >
                 {/* Image */}
                 <div
-                  className="
-                    package-img
-                    relative
-                    overflow-hidden
-                  "
+                  className="package-img relative overflow-hidden"
                   style={{
                     backgroundImage: `url("${pkg.image}")`,
                   }}
                 >
-                  {/* Image Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
 
                   {/* Duration */}
@@ -99,27 +111,29 @@ export default function Packages({ onBook }) {
                     {pkg.duration}
                   </span>
 
-                  {/* 25% OFF */}
-                  <span
-                    className="
-                      absolute
-                      right-4
-                      top-4
-                      z-10
-                      rounded-full
-                      bg-gold
-                      px-3
-                      py-1.5
-                      text-[10px]
-                      font-black
-                      uppercase
-                      tracking-wider
-                      text-night
-                      shadow-lg
-                    "
-                  >
-                    25% OFF
-                  </span>
+                  {/* Discount */}
+                  {finalPKR && (
+                    <span
+                      className="
+                        absolute
+                        right-4
+                        top-4
+                        z-10
+                        rounded-full
+                        bg-gold
+                        px-3
+                        py-1.5
+                        text-[10px]
+                        font-black
+                        uppercase
+                        tracking-wider
+                        text-night
+                        shadow-lg
+                      "
+                    >
+                      25% OFF
+                    </span>
+                  )}
                 </div>
 
                 {/* Content */}
@@ -132,45 +146,80 @@ export default function Packages({ onBook }) {
                     </p>
                   )}
 
-                  {/* Price */}
-                  <div className="mt-3 rounded-2xl border border-white/10 bg-black/20 p-4">
+                  {/* Pricing */}
+                  {finalPKR ? (
+                    <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-4">
 
-                    {usdPrice ? (
-                      <>
+                      {/* Original Price */}
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-medium text-white/35">
+                          Original:
+                        </span>
+
+                        <span className="text-sm font-semibold text-white/35 line-through">
+                          {formatPKR(originalPKR)}
+                        </span>
+                      </div>
+
+                      {/* Discount */}
+                      <div className="mt-2">
+                        <span
+                          className="
+                            inline-flex
+                            rounded-full
+                            bg-gold/10
+                            px-2.5
+                            py-1
+                            text-[10px]
+                            font-black
+                            uppercase
+                            tracking-wider
+                            text-gold
+                          "
+                        >
+                          25% OFF
+                        </span>
+                      </div>
+
+                      {/* Final Price */}
+                      <div className="mt-3">
                         <p className="text-[10px] font-bold uppercase tracking-wider text-white/40">
-                          Starting Price
+                          Now
                         </p>
 
                         <div className="mt-1 flex flex-wrap items-baseline gap-x-3 gap-y-1">
                           <span className="text-2xl font-black text-gold">
-                            {pkg.price}
+                            {formatPKR(finalPKR)}
                           </span>
 
-                          <span className="text-sm font-semibold text-white/60">
-                            ≈ ${usdPrice.toLocaleString()}
-                          </span>
+                          {usdPrice && (
+                            <span className="text-sm font-semibold text-white/50">
+                              ≈ ${usdPrice.toLocaleString()}
+                            </span>
+                          )}
                         </div>
 
                         <p className="mt-1 text-[10px] text-white/30">
-                          PKR / person
+                          per person
                         </p>
-                      </>
-                    ) : (
-                      <>
-                        <p className="text-[10px] font-bold uppercase tracking-wider text-white/40">
-                          Pricing
-                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    /* Quote Based Package */
+                    <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-4">
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-white/40">
+                        Pricing
+                      </p>
 
-                        <p className="mt-1 text-lg font-bold text-gold">
-                          {pkg.price}
-                        </p>
+                      <p className="mt-1 text-lg font-bold text-gold">
+                        {pkg.price}
+                      </p>
 
-                        <p className="mt-1 text-[10px] text-white/35">
-                          Contact us for a personalized quotation.
-                        </p>
-                      </>
-                    )}
-                  </div>
+                      <p className="mt-1 text-[10px] leading-5 text-white/35">
+                        Contact us for a personalized quotation.
+                      </p>
+                    </div>
+                  )}
 
                   {/* Title */}
                   <h3 className="package-title mt-5">
@@ -182,7 +231,7 @@ export default function Packages({ onBook }) {
                     {pkg.description}
                   </p>
 
-                  {/* Booking */}
+                  {/* Book Button */}
                   <button
                     type="button"
                     onClick={() => onBook(pkg.destination || pkg.title)}
@@ -204,16 +253,27 @@ export default function Packages({ onBook }) {
           })}
         </div>
 
-        {/* Offer Note */}
-        <div className="mt-10 rounded-2xl border border-gold/20 bg-gold/[0.04] px-5 py-4">
-          <p className="text-center text-xs leading-6 text-white/50">
-            <span className="font-bold text-gold">
-              25% OFF Special Offer:
-            </span>{" "}
-            The package prices displayed above are the original package
-            prices. The promotional offer is shown separately and does not
-            change the actual prices stored in your package data.
-          </p>
+        {/* Promotional Information */}
+        <div className="mt-10 rounded-2xl border border-gold/20 bg-gold/[0.04] p-5 sm:p-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-start gap-3">
+              
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gold/10 text-lg">
+                🎁
+              </div>
+
+              <div>
+                <h3 className="text-sm font-bold text-white">
+                  Special 25% Promotional Offer
+                </h3>
+
+                <p className="mt-1 text-xs leading-5 text-white/45">
+                  Enjoy 25% OFF selected tour packages.
+                </p>
+              </div>
+
+            </div>
+          </div>
         </div>
 
       </div>

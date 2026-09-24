@@ -70,6 +70,31 @@ const packages = [
   },
 ];
 
+
+const DISCOUNT_RATE = 0.25;
+
+const getPKRValue = (price) => {
+  if (typeof price !== "string") return null;
+
+  const match = price.match(/[\d,]+/);
+
+  if (!match) return null;
+
+  return Number(match[0].replace(/,/g, ""));
+};
+
+const getOriginalPrice = (finalPrice) => {
+  const pkr = getPKRValue(finalPrice);
+
+  if (!pkr) return null;
+
+  return Math.round(pkr / (1 - DISCOUNT_RATE));
+};
+
+const formatPKR = (price) => {
+  return `Rs ${price.toLocaleString("en-PK")}`;
+};
+
 const essentials = [
   {
     icon: "🚙",
@@ -400,22 +425,54 @@ function InfiniteCardRow({ items, onBook, rowPrefix, reverse = false }) {
               </span>
 
               {/* Price */}
-              <span
-                className="
-                  absolute
-                  bottom-3
-                  right-3
-                  rounded-full
-                  bg-gold
-                  px-2.5
-                  py-1
-                  text-[11px]
-                  font-bold
-                  text-night
-                "
-              >
-                {item.price}
-              </span>
+              {getPKRValue(item.price) ? (
+                <div
+                  className="
+                    absolute
+                    bottom-3
+                    right-3
+                    z-10
+                    rounded-xl
+                    border
+                    border-white/10
+                    bg-black/75
+                    px-3
+                    py-2
+                    text-right
+                    shadow-lg
+                    backdrop-blur-md
+                  "
+                >
+                  <p className="text-[9px] font-semibold text-white/40 line-through">
+                    {formatPKR(getOriginalPrice(item.price))}
+                  </p>
+
+                  <p className="mt-0.5 text-[9px] font-black uppercase tracking-wider text-gold">
+                    25% OFF
+                  </p>
+
+                  <p className="mt-0.5 text-sm font-black text-white">
+                    {item.price.replace(/^From\s+/i, "")}
+                  </p>
+                </div>
+              ) : (
+                <span
+                  className="
+                    absolute
+                    bottom-3
+                    right-3
+                    rounded-full
+                    bg-gold
+                    px-2.5
+                    py-1
+                    text-[11px]
+                    font-bold
+                    text-night
+                  "
+                >
+                  {item.price}
+                </span>
+              )}
             </div>
 
             {/* Content */}
@@ -578,6 +635,29 @@ export default function PackagesPage({ onBook }) {
             rowPrefix="r2"
             reverse={true}
           />
+        </div>
+
+        {/* Promotional Offer */}
+        <div className="mx-auto mt-6 max-w-7xl px-4 sm:px-6">
+          <div className="rounded-2xl border border-gold/20 bg-gold/[0.04] p-5 sm:p-6">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gold/10 text-lg">
+                🎁
+              </div>
+
+              <div>
+                <h3 className="text-sm font-bold text-white">
+                  Special 25% Promotional Offer
+                </h3>
+
+                <p className="mt-1 text-xs leading-5 text-white/45">
+                  Enjoy 25% OFF selected tour packages. The price shown on
+                  each package is the final promotional price, while the
+                  original price is displayed with a strikethrough.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
