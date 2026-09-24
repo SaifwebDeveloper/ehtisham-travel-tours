@@ -300,7 +300,7 @@ export default function International({ onBook }) {
           {/* Center Heading */}
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold">
-              2026 International Packages
+              2026  Packages for international visitors
             </p>
 
             <h2 className="mt-4 font-display text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
