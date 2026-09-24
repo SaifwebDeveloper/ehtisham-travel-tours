@@ -1,18 +1,85 @@
+
 import { Link } from "react-router-dom";
 
 import packageSkardu from "../assets/package-skardu.jpg";
 import internationalGuests from "../assets/IMG-20260919-WA0223.jpg";
+import tripLakeBanner from "../assets/trip-lake-banner.jpg";
+import tripMalamJabba from "../assets/trip-malam-jabba-wide.jpg";
+import tripFamilyValley from "../assets/trip-family-valley.jpg";
 
 const pricingTiers = [
-  { pax: "2 PAX", tourLeader: "0", executive: "USD 2,630", economy: "USD 2,250", transport: "Car" },
-  { pax: "4 PAX", tourLeader: "0", executive: "USD 2,480", economy: "USD 2,030", transport: "BRV Car" },
-  { pax: "6 PAX", tourLeader: "0", executive: "USD 2,180", economy: "USD 1,770", transport: "Grand Cabin" },
-  { pax: "8 PAX", tourLeader: "0", executive: "USD 1,980", economy: "USD 1,600", transport: "Grand Cabin" },
-  { pax: "10 PAX", tourLeader: "1 - Free", executive: "USD 1,800", economy: "USD 1,400", transport: "Coaster" },
-  { pax: "12 PAX", tourLeader: "1 - Free", executive: "USD 1,700", economy: "USD 1,200", transport: "Coaster" },
-  { pax: "14 PAX", tourLeader: "1 - Free", executive: "USD 1,550", economy: "USD 1,100", transport: "Coaster" },
-  { pax: "16 PAX", tourLeader: "1 - Free", executive: "USD 1,430", economy: "USD 1,020", transport: "Coaster" },
-  { pax: "18 PAX", tourLeader: "1 - Free", executive: "USD 1,320", economy: "USD 920", transport: "Coaster" },
+  {
+    pax: "2 PAX",
+    tourLeader: "0",
+    executive: "USD 2,630",
+    economy: "USD 2,250",
+    transport: "Car",
+    image: packageSkardu,
+  },
+  {
+    pax: "4 PAX",
+    tourLeader: "0",
+    executive: "USD 2,480",
+    economy: "USD 2,030",
+    transport: "BRV Car",
+    image: tripLakeBanner,
+  },
+  {
+    pax: "6 PAX",
+    tourLeader: "0",
+    executive: "USD 2,180",
+    economy: "USD 1,770",
+    transport: "Grand Cabin",
+    image: tripFamilyValley,
+  },
+  {
+    pax: "8 PAX",
+    tourLeader: "0",
+    executive: "USD 1,980",
+    economy: "USD 1,600",
+    transport: "Grand Cabin",
+    image: tripMalamJabba,
+  },
+  {
+    pax: "10 PAX",
+    tourLeader: "1 - Free",
+    executive: "USD 1,800",
+    economy: "USD 1,400",
+    transport: "Coaster",
+    image: packageSkardu,
+  },
+  {
+    pax: "12 PAX",
+    tourLeader: "1 - Free",
+    executive: "USD 1,700",
+    economy: "USD 1,200",
+    transport: "Coaster",
+    image: tripLakeBanner,
+  },
+  {
+    pax: "14 PAX",
+    tourLeader: "1 - Free",
+    executive: "USD 1,550",
+    economy: "USD 1,100",
+    transport: "Coaster",
+    image: tripFamilyValley,
+  },
+  {
+    pax: "16 PAX",
+    tourLeader: "1 - Free",
+    executive: "USD 1,430",
+    economy: "USD 1,020",
+    transport: "Coaster",
+    image: tripMalamJabba,
+  },
+  {
+    pax: "18 PAX",
+    tourLeader: "1 - Free",
+    executive: "USD 1,320",
+    economy: "USD 920",
+    transport: "Coaster",
+    image: packageSkardu,
+  },
 ];
 
 const packageIncludes = [
@@ -138,7 +205,10 @@ const practicalGuidance = [
 export default function International({ onBook }) {
   return (
     <main className="bg-night pt-24 text-white">
-      {/* Hero */}
+
+      {/* =====================================================
+          HERO
+      ===================================================== */}
       <section className="relative overflow-hidden px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(214,173,96,0.14),transparent_40%),radial-gradient(circle_at_bottom_left,rgba(16,185,129,0.08),transparent_35%)]" />
 
@@ -181,7 +251,9 @@ export default function International({ onBook }) {
         </div>
       </section>
 
-      {/* Benefits */}
+      {/* =====================================================
+          BENEFITS
+      ===================================================== */}
       <section className="border-y border-white/10 bg-white/[0.02] px-4 py-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="mx-auto max-w-3xl text-center">
@@ -219,71 +291,232 @@ export default function International({ onBook }) {
         </div>
       </section>
 
-      {/* 2026 Quotation & Pricing Section */}
+      {/* =====================================================
+          INTERNATIONAL PACKAGES
+      ===================================================== */}
       <section className="px-4 py-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
+
+          {/* Center Heading */}
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold">
-              Quotation for 2026
+              2026 International Packages
             </p>
-            <h2 className="mt-4 font-display text-3xl font-bold sm:text-4xl">
-              10D 9N Skardu – Hunza – Nalter – Gilgit
+
+            <h2 className="mt-4 font-display text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
+              Packages for International Visitors
             </h2>
-            <p className="mt-3 text-sm text-white/60 sm:text-base">
-              Explore the beauty of Skardu, Hunza, Nalter & Gilgit with transparent pricing structured by group size.
+
+            <p className="mt-5 text-sm leading-7 text-white/55 sm:text-base sm:leading-8">
+              Explore Skardu, Hunza, Nalter and Gilgit with transparent
+              package options designed around your group size.
             </p>
           </div>
 
-          {/* Pricing Table */}
-          <div className="mt-12 overflow-x-auto rounded-2xl border border-white/10 bg-white/[0.02]">
-            <table className="w-full text-left text-sm">
-              <thead className="border-b border-white/10 bg-white/5 text-xs font-bold uppercase text-gold">
-                <tr>
-                  <th className="px-6 py-4">No. of Pax</th>
-                  <th className="px-6 py-4">Tour Leader FOC</th>
-                  <th className="px-6 py-4">Per Person (Executive)</th>
-                  <th className="px-6 py-4">Per Person (Economy)</th>
-                  <th className="px-6 py-4">Transport</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/10 text-white/80">
-                {pricingTiers.map((row, idx) => (
-                  <tr key={idx} className="transition hover:bg-white/5">
-                    <td className="px-6 py-4 font-bold text-white">{row.pax}</td>
-                    <td className="px-6 py-4">{row.tourLeader}</td>
-                    <td className="px-6 py-4 font-semibold text-gold">{row.executive}</td>
-                    <td className="px-6 py-4 font-semibold text-emerald-400">{row.economy}</td>
-                    <td className="px-6 py-4">{row.transport}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          {/* Route */}
+          <div className="mx-auto mt-8 flex max-w-2xl flex-wrap items-center justify-center gap-2">
+            {["Skardu", "Hunza", "Nalter", "Gilgit"].map((destination) => (
+              <span
+                key={destination}
+                className="rounded-full border border-gold/20 bg-gold/10 px-4 py-2 text-xs font-semibold text-gold"
+              >
+                {destination}
+              </span>
+            ))}
           </div>
 
-          {/* Supplements & Policy Cards */}
+          {/* Package Cards */}
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {pricingTiers.map((pkg) => (
+              <button
+                key={pkg.pax}
+                type="button"
+                onClick={() =>
+                  onBook?.(
+                    `International Package - ${pkg.pax} - ${pkg.executive} Executive`
+                  )
+                }
+                className="group overflow-hidden rounded-3xl border border-white/10 bg-white/[0.025] text-left transition-all duration-500 hover:-translate-y-2 hover:border-gold/30 hover:bg-white/[0.045] hover:shadow-2xl hover:shadow-black/30"
+              >
+                {/* Card Image */}
+                <div className="relative h-56 overflow-hidden">
+                  <img
+                    src={pkg.image}
+                    alt={`${pkg.pax} international Pakistan tour package`}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                  />
+
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+
+                  {/* Pax Badge */}
+                  <div className="absolute left-5 top-5 rounded-full border border-white/20 bg-black/35 px-4 py-2 text-xs font-bold text-white backdrop-blur-md">
+                    {pkg.pax}
+                  </div>
+
+                  {/* Click Icon */}
+                  <div className="absolute right-5 top-5 grid h-10 w-10 translate-y-2 place-items-center rounded-full border border-white/20 bg-black/30 text-lg text-white opacity-0 backdrop-blur-md transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+                    ↗
+                  </div>
+
+                  {/* Image Title */}
+                  <div className="absolute bottom-5 left-5 right-5">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold">
+                      Northern Pakistan
+                    </p>
+
+                    <h3 className="mt-1 font-display text-2xl font-bold text-white">
+                      {pkg.pax} Group Package
+                    </h3>
+                  </div>
+                </div>
+
+                {/* Card Content */}
+                <div className="p-6">
+
+                  {/* Pricing */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="rounded-2xl border border-gold/15 bg-gold/5 p-4">
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-white/40">
+                        Executive
+                      </p>
+
+                      <p className="mt-2 text-xl font-bold text-gold">
+                        {pkg.executive}
+                      </p>
+
+                      <p className="mt-1 text-[10px] text-white/35">
+                        Per Person
+                      </p>
+                    </div>
+
+                    <div className="rounded-2xl border border-emerald-400/15 bg-emerald-400/5 p-4">
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-white/40">
+                        Economy
+                      </p>
+
+                      <p className="mt-2 text-xl font-bold text-emerald-400">
+                        {pkg.economy}
+                      </p>
+
+                      <p className="mt-1 text-[10px] text-white/35">
+                        Per Person
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Details */}
+                  <div className="mt-5 space-y-3 border-t border-white/10 pt-5">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-white/45">
+                        Tour Leader FOC
+                      </span>
+
+                      <span className="text-sm font-semibold text-white">
+                        {pkg.tourLeader}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-white/45">
+                        Transport
+                      </span>
+
+                      <span className="text-sm font-semibold text-white">
+                        {pkg.transport}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* CTA */}
+                  <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-5">
+                    <span className="text-sm font-bold text-white transition-colors group-hover:text-gold">
+                      Request This Package
+                    </span>
+
+                    <span className="text-lg text-gold transition-transform duration-300 group-hover:translate-x-1">
+                      →
+                    </span>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          {/* Package Note */}
+          <div className="mx-auto mt-8 max-w-3xl rounded-2xl border border-white/10 bg-white/[0.025] p-5 text-center">
+            <p className="text-xs leading-6 text-white/45 sm:text-sm">
+              Pricing is structured according to group size. Contact us to
+              confirm availability, dates, accommodation preferences and your
+              final personalised quotation.
+            </p>
+          </div>
+
+          {/* Supplements */}
           <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+
             <div className="rounded-2xl border border-white/10 bg-white/[0.025] p-6">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-gold">Single Supplement</h4>
-              <div className="mt-3 space-y-1">
-                <p className="text-sm text-white/70">Executive: <span className="font-bold text-gold">USD 400</span></p>
-                <p className="text-sm text-white/70">Economy: <span className="font-bold text-emerald-400">USD 250</span></p>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-gold">
+                Single Supplement
+              </h4>
+
+              <div className="mt-3 space-y-2">
+                <p className="text-sm text-white/70">
+                  Executive:
+                  <span className="ml-2 font-bold text-gold">
+                    USD 400
+                  </span>
+                </p>
+
+                <p className="text-sm text-white/70">
+                  Economy:
+                  <span className="ml-2 font-bold text-emerald-400">
+                    USD 250
+                  </span>
+                </p>
               </div>
             </div>
 
             <div className="rounded-2xl border border-white/10 bg-white/[0.025] p-6">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-gold">Child Policy</h4>
-              <div className="mt-3 space-y-1">
-                <p className="text-sm text-white/70">Under 3 years: <span className="font-bold text-white">USD 200</span></p>
-                <p className="text-sm text-white/70">Age 3–10 (Bed + Full Extra Board): <span className="font-bold text-gold">50% of Package Price</span></p>
-                <p className="text-sm text-white/70">Age 3–10 (Bed + Half Price): <span className="font-bold text-gold">50% of Package Price</span></p>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-gold">
+                Child Policy
+              </h4>
+
+              <div className="mt-3 space-y-2">
+                <p className="text-sm text-white/70">
+                  Under 3 years:
+                  <span className="ml-2 font-bold text-white">
+                    USD 200
+                  </span>
+                </p>
+
+                <p className="text-sm leading-6 text-white/70">
+                  Age 3–10 (Bed + Full Extra Board):
+                  <span className="ml-2 font-bold text-gold">
+                    50% of Package Price
+                  </span>
+                </p>
+
+                <p className="text-sm leading-6 text-white/70">
+                  Age 3–10 (Bed + Half Price):
+                  <span className="ml-2 font-bold text-gold">
+                    50% of Package Price
+                  </span>
+                </p>
               </div>
             </div>
 
             <div className="rounded-2xl border border-white/10 bg-white/[0.025] p-6">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-gold">Destinations Covered</h4>
-              <div className="mt-3 flex flex-wrap gap-2">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-gold">
+                Destinations Covered
+              </h4>
+
+              <div className="mt-4 flex flex-wrap gap-2">
                 {["Skardu", "Hunza", "Nalter", "Gilgit"].map((dest) => (
-                  <span key={dest} className="rounded-lg border border-gold/20 bg-gold/10 px-3 py-1 text-xs font-semibold text-gold">
+                  <span
+                    key={dest}
+                    className="rounded-lg border border-gold/20 bg-gold/10 px-3 py-1.5 text-xs font-semibold text-gold"
+                  >
                     {dest}
                   </span>
                 ))}
@@ -291,13 +524,19 @@ export default function International({ onBook }) {
             </div>
           </div>
 
-          {/* Inclusions */}
-          <div className="mt-8 rounded-2xl border border-gold/20 bg-gold/5 p-8">
-            <h3 className="text-lg font-bold text-gold">Package Includes</h3>
-            <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {packageIncludes.map((inc, i) => (
-                <li key={i} className="flex items-center gap-3 text-sm text-white/80">
-                  <span className="text-gold">✓</span>
+          {/* Includes */}
+          <div className="mt-8 rounded-3xl border border-gold/20 bg-gold/5 p-7 sm:p-8">
+            <h3 className="text-lg font-bold text-gold">
+              Package Includes
+            </h3>
+
+            <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {packageIncludes.map((inc) => (
+                <li
+                  key={inc}
+                  className="flex items-start gap-3 text-sm leading-6 text-white/80"
+                >
+                  <span className="mt-0.5 text-gold">✓</span>
                   {inc}
                 </li>
               ))}
@@ -306,10 +545,13 @@ export default function International({ onBook }) {
         </div>
       </section>
 
-      {/* Sample Itinerary */}
+      {/* =====================================================
+          SAMPLE ITINERARY
+      ===================================================== */}
       <section className="px-4 py-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+
             {/* Image */}
             <div className="lg:sticky lg:top-32 lg:self-start">
               <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold">
@@ -319,7 +561,9 @@ export default function International({ onBook }) {
               <h2 className="mt-4 font-display text-3xl font-bold sm:text-4xl">
                 Eight days in
                 <br />
-                <em className="text-gold">northern Pakistan.</em>
+                <em className="text-gold">
+                  northern Pakistan.
+                </em>
               </h2>
 
               <p className="mt-5 text-sm leading-8 text-white/55 sm:text-base">
@@ -388,14 +632,17 @@ export default function International({ onBook }) {
         </div>
       </section>
 
-      {/* International Guests */}
+      {/* =====================================================
+          INTERNATIONAL GUESTS
+      ===================================================== */}
       <section className="border-y border-white/10 bg-white/[0.02] px-4 py-24 sm:px-6 lg:px-8">
         <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2">
-          <div className="overflow-hidden rounded-3xl border border-white/10">
+
+          <div className="group overflow-hidden rounded-3xl border border-white/10">
             <img
               src={internationalGuests}
               alt="International guests with their local Pakistan tour host"
-              className="h-[430px] w-full object-cover"
+              className="h-[430px] w-full object-cover transition duration-700 group-hover:scale-105"
               loading="lazy"
             />
           </div>
@@ -408,7 +655,9 @@ export default function International({ onBook }) {
             <h2 className="mt-4 font-display text-3xl font-bold sm:text-4xl">
               A local team
               <br />
-              <em className="text-gold">on your side.</em>
+              <em className="text-gold">
+                on your side.
+              </em>
             </h2>
 
             <p className="mt-6 text-sm leading-8 text-white/55 sm:text-base">
@@ -418,41 +667,31 @@ export default function International({ onBook }) {
             </p>
 
             <div className="mt-8 space-y-4">
-              <div className="flex gap-3">
-                <span className="text-gold">✓</span>
-                <span className="text-sm text-white/65">
-                  Pre-arrival communication
-                </span>
-              </div>
+              {[
+                "Pre-arrival communication",
+                "Airport and arrival coordination",
+                "English-speaking assistance",
+                "On-ground travel support",
+              ].map((item) => (
+                <div key={item} className="flex gap-3">
+                  <span className="text-gold">✓</span>
 
-              <div className="flex gap-3">
-                <span className="text-gold">✓</span>
-                <span className="text-sm text-white/65">
-                  Airport and arrival coordination
-                </span>
-              </div>
-
-              <div className="flex gap-3">
-                <span className="text-gold">✓</span>
-                <span className="text-sm text-white/65">
-                  English-speaking assistance
-                </span>
-              </div>
-
-              <div className="flex gap-3">
-                <span className="text-gold">✓</span>
-                <span className="text-sm text-white/65">
-                  On-ground travel support
-                </span>
-              </div>
+                  <span className="text-sm text-white/65">
+                    {item}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Before You Travel */}
+      {/* =====================================================
+          BEFORE YOU TRAVEL
+      ===================================================== */}
       <section className="px-4 py-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
+
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-gold">
               Before You Travel
@@ -461,7 +700,9 @@ export default function International({ onBook }) {
             <h2 className="mt-4 font-display text-3xl font-bold sm:text-4xl">
               Practical guidance,
               <br />
-              <em className="text-gold">without guesswork.</em>
+              <em className="text-gold">
+                without guesswork.
+              </em>
             </h2>
 
             <p className="mt-5 text-sm leading-7 text-white/55 sm:text-base">
@@ -474,7 +715,7 @@ export default function International({ onBook }) {
             {practicalGuidance.map((item) => (
               <article
                 key={item.title}
-                className="rounded-2xl border border-white/10 bg-white/[0.025] p-7"
+                className="rounded-2xl border border-white/10 bg-white/[0.025] p-7 transition duration-300 hover:-translate-y-1 hover:border-gold/30"
               >
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-gold/20 bg-gold/10 text-xl">
                   {item.icon}
@@ -502,12 +743,15 @@ export default function International({ onBook }) {
         </div>
       </section>
 
-      {/* Final CTA */}
+      {/* =====================================================
+          FINAL CTA
+      ===================================================== */}
       <section className="relative overflow-hidden border-t border-white/10 px-4 py-24 sm:px-6 lg:px-8">
         <div className="absolute -left-40 -top-40 h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl" />
         <div className="absolute -bottom-40 -right-40 h-96 w-96 rounded-full bg-gold/10 blur-3xl" />
 
         <div className="relative mx-auto max-w-4xl text-center">
+
           <img
             src="/assets/ehtisham-logo.jpg"
             alt="Ehtisham Travel & Tours logo"
@@ -517,7 +761,9 @@ export default function International({ onBook }) {
           <h2 className="font-display text-4xl font-bold sm:text-5xl">
             Plan your visit
             <br />
-            <em className="text-gold">to Pakistan.</em>
+            <em className="text-gold">
+              to Pakistan.
+            </em>
           </h2>
 
           <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-white/50 sm:text-base">
@@ -526,6 +772,7 @@ export default function International({ onBook }) {
           </p>
 
           <div className="mt-8 flex flex-wrap justify-center gap-4">
+
             <button
               type="button"
               onClick={() => onBook?.("International Pakistan Tour")}

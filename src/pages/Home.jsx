@@ -18,9 +18,10 @@ export default function Home({ onBook }) {
 
       <Intro />
 
+      <Packages onBook={onBook} />
       <Stories />
 
-      <Packages onBook={onBook} />
+      
 
       <InternationalPreview onBook={onBook} />
 
